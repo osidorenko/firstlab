@@ -8,6 +8,13 @@ public class MyList<Task> {
         frstEl = new Elem<>(null, null);
     }
 
+    public MyList(MyList arr) {
+        frstEl = new Elem<Task>(null, null);
+        for (int i = 0; i < arr.size(); i++) {
+            add((Task) arr.get(i));
+        }
+    }
+
     public void add(Task e) {
         Elem temp = new Elem(e, frstEl.getNext());
         frstEl.setNext(temp);
@@ -27,19 +34,52 @@ public class MyList<Task> {
         }
     }
 
+    private void removefirst() {
+        frstEl.setNext(frstEl.getNext().getNext());
+    }
+
     public void remove(int x) {
-        Elem temp;
-        temp = frstEl;
-        for(int i = 0;i<x-1;i++){
-            temp = temp.getNext();
+        if (x == 0) {
+            removefirst();
+        } else {
+            Elem temp;
+            temp = frstEl;
+            for (int i = 0; i < x; i++) {
+                temp = temp.getNext();
+            }
+            temp.setNext(temp.getNext().getNext());
         }
-        temp.setNext(temp.getNext().getNext());
         size--;
     }
 
+    public void set(int x, Task t) {
+
+        Elem temp = frstEl;
+        for (int i = 0; i < x; i++) {
+            temp = temp.getNext();
+        }
+        Elem nw = new Elem(t, temp.getNext().getNext());
+        temp.setNext(nw);
+
+    }
+    public void clear(){
+        frstEl.setNext(null);
+    }
 
     public int size() {
         return size;
+    }
+
+    @Override
+    public String toString() {
+        String s = "";
+        Elem temp = frstEl.getNext();
+        for (int i = 0; i < size; i++) {
+            s += " " + temp.getTs();
+            temp = temp.getNext();
+        }
+        s += " size : " + size;
+        return s;
     }
 
     private static class Elem<Task> {
