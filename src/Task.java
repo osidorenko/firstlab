@@ -8,6 +8,7 @@ public class Task {
     public Task(int n, int a) {
         this.n = n;
         this.a = a;
+
     }
 
     public int getN() {

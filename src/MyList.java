@@ -62,7 +62,8 @@ public class MyList<Task> {
         temp.setNext(nw);
 
     }
-    public void clear(){
+
+    public void clear() {
         frstEl.setNext(null);
     }
 

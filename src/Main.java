@@ -8,34 +8,34 @@ public class Main {
         Task t3 = new Task(3, 3);
         Task t4 = new Task(4, 4);
         Task t5 = new Task(5, 5);
-        Task t6 = new Task(0, 5);
+        Task t6 = new Task(0, 11);
 
         MyList<Task> arr = new MyList<>();
+        MyList arr1;
+        MyList arr2 = new MyList();
         arr.add(t1);
         arr.add(t2);
         arr.add(t5);
         arr.add(t3);
         arr.add(t4);
-        // arr.add(t5);
         arr.add(t5);
         arr.add(t5);
-        MyList arr1 = new MyList(arr);
-        arr.add(new Task(10, 1));
-
-        arr1.remove(0);
-
-        arr1.add(new Task(10, 1));
-        //arr1.add(t1);
-
-        System.out.println(arr.size());
-        System.out.println(transform(arr));
-        System.out.println(meaning(arr, 2));
-        System.out.println(arr.toString());
-        System.out.println("1   " + arr.toString() + "\n2   " + arr1.toString());
+        arr.add(new Task(0,7));
+        arr2.add(t1);
+        arr2.add(t6);
+        arr2.add(t6);
+        arr2.add(t6);
+        arr2.add(new Task(7, 9));
+        arr2.add(t3);
+        arr1 = new MyList(arr);
+        System.out.println("    Задание 1.1");
+        System.out.println("Начальное значение многочленов 1,2,3 : \n 1 " + transform(arr) + " \n 2 " + transform(arr1) + " \n 3 " + transform(arr2));
+        System.out.println("Выполнение логической функции euality() для многочленов 1,2 и многочленов 1,3 : \n 1 и 2 : " + euality(arr, arr1) + " \n 1 и 3 : " + euality(arr, arr2));
+        System.out.println("Выполнение Функции  meaning() для многочленов 1 и 3 \n 1 при х=2 " + transform(arr) + " = " + meaning(arr, 2) + "\n 3 при х=3 " + transform(arr2) + " = " + meaning(arr2, 3));
+        System.out.println("Выполнение функции add() : для многочленов 1 и 3 :");
         MyList list = new MyList();
-        add(list, arr, arr);
+        add(list, arr, arr2);
     }
-
 
     public static boolean euality(MyList<Task> a, MyList<Task> b) {
         if (a.size() != b.size()) {
@@ -56,8 +56,8 @@ public class Main {
         }
     }
 
-    public static double meaning(MyList<Task> s, int x) {
-        double result = 0;
+    public static long meaning(MyList<Task> s, int x) {
+        long result = 0;
         for (int i = 0; i < s.size(); i++) {
             Task t = s.get(i);
             result += t.getA() * Math.pow(x, t.getN());
@@ -78,6 +78,7 @@ public class Main {
         System.out.println(transform(p));
     }
 
+    //метод предназначен для упорядочивания элементов списка по убыванию
     public static MyList ordered(MyList beg) {
         MyList end = new MyList();
         MyList begin = new MyList(beg);
@@ -95,6 +96,12 @@ public class Main {
             end.add(begin.get(g));
             begin.remove(g);
         }
+        for (int i = 0; i < end.size(); i++) {
+            Task del = (Task) end.get(i);
+            if (del.getA() == 0) {
+                end.remove(i);
+            }
+        }
         int i = 1;
         while (i < end.size()) {
             Task t1 = (Task) end.get(i - 1);
@@ -102,7 +109,6 @@ public class Main {
             if (t1.getN() == t2.getN()) {
                 end.set(i, new Task(t1.getN(), t1.getA() + t2.getA()));
                 end.remove(i - 1);
-
             } else {
                 i++;
             }
@@ -113,11 +119,11 @@ public class Main {
     public static String transform(MyList arr) {
         arr = ordered(arr);
         String s = "S(x) = ";
-        for (int i = 0; i < arr.size() - 1; i++) {
+        for (int i = 0; i < arr.size(); i++) {
             Task w = (Task) arr.get(i);
             s += " " + w.getA() + "*x^(" + w.getN() + ") + ";
         }
-        s = s.substring(0,s.length()-2);
+        s = s.substring(0, s.length() - 2);
         return s;
 
     }
